@@ -23,6 +23,29 @@ $(document).ready(function(){
       }
     ];
 
-    // Get started here!
+    var productTemplate = $('template#product').html();
+      for(var i = 0; i < products.length; i++){
+        var newProduct = $(productTemplate);
+        var pData = products[i];
+        
+        $('h2', newProduct).text(products[i].name);
+        var newManufacturer = $('<span/>').addClass('manufacturer').text('by ' + products[i].manufacturer);
+        $('h2', newProduct).append(newManufacturer);
+        $('.image img', newProduct).attr('src', products[i].imageSrc);
+        $('h3', newProduct).text(products[i].description)
+        $('.price', newProduct).text('$' + products[i].price.toFixed(2));
+        $('.mobile-price', newProduct).text('$' + products[i].price.toFixed(2));
+        $(newProduct).data('price', pData.price);
 
+        $('.cart').append(newProduct);
+    }
+    $('.move').on('click',function(){
+      if ($(this).parents().eq(4).hasClass('cart')){
+        $(this).parents().eq(3).appendTo('.saved');
+        $(this).text('Add to cart')
+      } else {
+        $(this).parents().eq(3).appendTo('.cart')
+        $(this).text('Save for later')
+      }
+    });
   });
